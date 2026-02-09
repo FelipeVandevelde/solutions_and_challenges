@@ -1,4 +1,4 @@
-# :black_circle: :orange_circle: LeetCode: Difícil (0/907)
+# <img src="../../../assets/a.svg" width="35"> LeetCode: Difícil (0/907)
 
 Este diretório contém as soluções dos problemas do LeetCode categorizados em **Difícil**.
 

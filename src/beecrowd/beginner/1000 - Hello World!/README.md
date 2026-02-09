@@ -7,7 +7,7 @@
 
 Every programmer knows the ritual: to start on the right foot, we must greet the world! In beecrowd, the secret isn't just what you write, but **how** you end the sentence.
 
-**A Estratégia**
+**The Strategy**
 * **The Content:** Print exactly the phrase `Hello World!`.
 * **The Golden Tip:** Don't forget the end-of-line character (`\n`) at the end. Without it, the online judge might return a "Presentation Error."
 
