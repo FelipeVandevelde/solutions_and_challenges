@@ -5,8 +5,8 @@ The table below displays the status of solved and documented problems, categoriz
 
 | Categoria | Documented | Total Problems | Percentage |
 | -- | -- | -- | -- |
-| [Easy](./easy/README.md) | 0 | 925 | 0% |
+| [Easy](./easy/README.md) | 1 | 925 | 0% |
 | [Medium](./medium/README.md) | 0 | 2004 | 0% |
 | [Hard](./hard/README.md) | 0 | 907 | 0% |
 | | | |
-| Total | 0 | 3836 | 0% |
+| Total | 1 | 3836 | 0% |
