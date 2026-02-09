@@ -5,7 +5,7 @@ The table below displays the status of solved and documented problems, categoriz
 
 | Category | Documented | Total Problems | Percentage |
 | -- | -- | -- | -- |
-| [Beginner](./beginner/README.md) | 2 | 334 | 1% |
+| [Beginner](./beginner/README.md) | 1 | 334 | 0% |
 | [Ad-Hoc](./ad-hoc/README.md) | 0 | 853 | 0% |
 | [Strings](./strings/README.md) | 0 | 150 | 0% |
 | [Structures and Libraries](./structures/README.md) | 0 | 180 | 0% |
@@ -15,4 +15,4 @@ The table below displays the status of solved and documented problems, categoriz
 | [Computational Geometry](./geometry/README.md) | 0 | 83 | 0% |
 | [SQL](./sql/README.md) | 0 | 50 | 0% |
 | | | |
-| Total | 2 | 2411 | 0% |
+| Total | 1 | 2411 | 0% |
