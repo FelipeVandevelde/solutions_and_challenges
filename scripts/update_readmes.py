@@ -16,6 +16,52 @@ LINK_TEXT_EN = "View Solution"
 LINK_TEXT_PT = "Acessar Solução"
 
 
+def _parse_int(value: str) -> int:
+    """Parse an integer from a table cell; returns 0 on failure."""
+    try:
+        return int(re.sub(r"[^0-9]", "", value))
+    except ValueError:
+        return 0
+
+
+def _format_percentage(documented: int, total: int) -> str:
+    if total <= 0:
+        return "0%"
+    return f"{round((documented / total) * 100)}%"
+
+
+def update_platform_readme(readme_path: Path, category: str, documented: int) -> None:
+    """Update category total problems and recompute Total row in platform README."""
+    lines = readme_path.read_text(encoding="utf-8").splitlines()
+    category_link = f"](./{category}/{readme_path.name})"
+    updated_lines: list[str] = []
+
+    total_documented = 0
+    total_all = 0
+
+    for line in lines:
+        if line.strip().startswith("|") and category_link in line:
+            cells = [c.strip() for c in line.strip().strip("|").split("|")]
+            if len(cells) >= 4:
+                total_problems = cells[2]
+                total_documented += documented
+                total_problems_int = _parse_int(total_problems)
+                total_all += total_problems_int
+                percentage = _format_percentage(documented, total_problems_int)
+                line = f"| {cells[0]} | {documented} | {total_problems} | {percentage} |"
+        updated_lines.append(line)
+
+    total_percentage = _format_percentage(total_documented, total_all)
+
+    final_lines: list[str] = []
+    for line in updated_lines:
+        if line.strip().startswith("| Total |"):
+            line = f"| Total | {total_documented} | {total_all} | {total_percentage} |"
+        final_lines.append(line)
+
+    readme_path.write_text("\n".join(final_lines), encoding="utf-8")
+
+
 def list_directories(path: str | Path) -> list[str]:
     """Return first-level directory names under path."""
     path = Path(path)
@@ -41,11 +87,11 @@ def update_header_count(lines: list[str], new_count: str) -> list[str]:
     return result
 
 
-def rebuild_table(lines: list[str], table_body: str) -> list[str]:
+def rebuild_table(trunca: bool, lines: list[str], table_body: str) -> list[str]:
     """Replace table body: keep content up to and including separator, then append table_body."""
     for i, line in enumerate(lines):
         if line == TABLE_SEPARATOR:
-            return lines[: i + 1] + [table_body]
+            return lines[: i + 1] + [table_body] if trunca else lines[: i + 1] + [table_body] + lines[i + 1 :]
     return lines
 
 
@@ -54,7 +100,7 @@ def update_readme(readme_path: Path, new_count: str, table_body: str) -> None:
     path = Path(readme_path)
     lines = path.read_text(encoding="utf-8").splitlines()
     lines = update_header_count(lines, new_count)
-    lines = rebuild_table(lines, table_body)
+    lines = rebuild_table(True, lines, table_body)
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -87,6 +133,12 @@ def main() -> None:
 
             update_readme(category_path / README_EN, count, table_en)
             update_readme(category_path / README_PT, count, table_pt)
+
+            # add here
+            update_platform_readme(platform_path  / README_EN, category, len(problems))
+            print(f"Updated {platform}/{category} with {len(problems)} problems.")
+            update_platform_readme(platform_path  / README_PT, category, len(problems))
+            print(f"Updated {platform}/{category} with {len(problems)} problems.")
 
 
 if __name__ == "__main__":
