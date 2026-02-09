@@ -1,14 +1,9 @@
-"""Update category README files with problem counts and solution tables."""
-
-import os
+"""Update README files with problem counts and solution tables."""
 import re
 from pathlib import Path
 from urllib.parse import quote
 
-# Table format expected in READMEs
 TABLE_SEPARATOR = "|---|---|---|"
-
-# Source tree and README filenames
 SRC_DIR = Path("./src")
 README_EN = "README.md"
 README_PT = "README-PT.md"
@@ -16,64 +11,32 @@ LINK_TEXT_EN = "View Solution"
 LINK_TEXT_PT = "Acessar Solução"
 
 
-def _parse_int(value: str) -> int:
+def list_directories(path: Path) -> list[str]:
+    """Return first-level directory names under path."""
+    return [entry.name for entry in path.iterdir() if entry.is_dir()]
+
+
+def parse_int(value: str) -> int:
     """Parse an integer from a table cell; returns 0 on failure."""
-    try:
-        return int(re.sub(r"[^0-9]", "", value))
-    except ValueError:
-        return 0
+    digits = re.sub(r"[^0-9]", "", value)
+    return int(digits) if digits else 0
 
 
-def _format_percentage(documented: int, total: int) -> str:
+def format_percentage(documented: int, total: int) -> str:
     if total <= 0:
         return "0%"
     return f"{round((documented / total) * 100)}%"
 
 
-def update_platform_readme(readme_path: Path, category: str, documented: int) -> None:
-    """Update category total problems and recompute Total row in platform README."""
-    lines = readme_path.read_text(encoding="utf-8").splitlines()
-    category_link = f"](./{category}/{readme_path.name})"
-    updated_lines: list[str] = []
-
-    total_documented = 0
-    total_all = 0
-
-    for line in lines:
-        if line.strip().startswith("|") and category_link in line:
-            cells = [c.strip() for c in line.strip().strip("|").split("|")]
-            if len(cells) >= 4:
-                total_problems = cells[2]
-                total_documented += documented
-                total_problems_int = _parse_int(total_problems)
-                total_all += total_problems_int
-                percentage = _format_percentage(documented, total_problems_int)
-                line = f"| {cells[0]} | {documented} | {total_problems} | {percentage} |"
-        updated_lines.append(line)
-
-    total_percentage = _format_percentage(total_documented, total_all)
-
-    final_lines: list[str] = []
-    for line in updated_lines:
-        if line.strip().startswith("| Total |"):
-            line = f"| Total | {total_documented} | {total_all} | {total_percentage} |"
-        final_lines.append(line)
-
-    readme_path.write_text("\n".join(final_lines), encoding="utf-8")
+def split_table_row(line: str) -> list[str]:
+    return [cell.strip() for cell in line.strip().strip("|").split("|")]
 
 
-def list_directories(path: str | Path) -> list[str]:
-    """Return first-level directory names under path."""
-    path = Path(path)
-    with os.scandir(path) as entries:
-        return [e.name for e in entries if e.is_dir()]
-
-
-def update_header_count(lines: list[str], new_count: str) -> list[str]:
+def update_header_problem_count(lines: list[str], new_count: int) -> list[str]:
     """Update the count in the header line matching '# Title (N/M)'."""
     pattern = re.compile(r"^(#\s*.*?\()(\d+)(/\d+\))\s*$")
-    result = []
     updated = False
+    result: list[str] = []
 
     for line in lines:
         match = pattern.match(line)
@@ -87,27 +50,26 @@ def update_header_count(lines: list[str], new_count: str) -> list[str]:
     return result
 
 
-def rebuild_table(trunca: bool, lines: list[str], table_body: str) -> list[str]:
-    """Replace table body: keep content up to and including separator, then append table_body."""
-    for i, line in enumerate(lines):
+def replace_table_body(lines: list[str], table_body: str, *, truncate: bool = True) -> list[str]:
+    """Replace table body after the separator row."""
+    for index, line in enumerate(lines):
         if line == TABLE_SEPARATOR:
-            return lines[: i + 1] + [table_body] if trunca else lines[: i + 1] + [table_body] + lines[i + 1 :]
+            return lines[: index + 1] + [table_body] if truncate else lines[: index + 1] + [table_body] + lines[index + 1 :]
     return lines
 
 
-def update_readme(readme_path: Path, new_count: str, table_body: str) -> None:
-    """Update README with new header count and solution table."""
-    path = Path(readme_path)
-    lines = path.read_text(encoding="utf-8").splitlines()
-    lines = update_header_count(lines, new_count)
-    lines = rebuild_table(True, lines, table_body)
-    path.write_text("\n".join(lines), encoding="utf-8")
+def update_category_readme(readme_path: Path, problem_count: int, table_body: str) -> None:
+    """Update category README with new header count and solution table."""
+    lines = readme_path.read_text(encoding="utf-8").splitlines()
+    lines = update_header_problem_count(lines, problem_count)
+    lines = replace_table_body(lines, table_body, truncate=True)
+    readme_path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def build_table_body(problems: list[str], link_text: str, readme_name: str) -> str:
-    """Build table rows string from problem directory names (e.g. '123 - Problem Name')."""
-    rows = []
-    for problem in problems:
+def build_solution_table(problem_dirs: list[str], link_text: str, readme_name: str) -> str:
+    """Build table rows from problem directory names (e.g. '123 - Problem Name')."""
+    rows: list[str] = []
+    for problem in problem_dirs:
         parts = problem.split(" - ", 1)
         problem_id = parts[0]
         problem_name = parts[1] if len(parts) > 1 else ""
@@ -116,29 +78,75 @@ def build_table_body(problems: list[str], link_text: str, readme_name: str) -> s
     return "\n".join(rows)
 
 
+def is_category_row(line: str, category: str) -> bool:
+    if "](./" not in line or "/README" not in line:
+        return False
+    return f"](./{quote(category)}/" in line
+
+
+def is_total_row(line: str) -> bool:
+    return line.strip().startswith("| Total |")
+
+
+def compute_totals(lines: list[str]) -> tuple[int, int]:
+    total_documented = 0
+    total_all = 0
+    for line in lines:
+        if "](./" in line and "/README" in line and not is_total_row(line):
+            cells = split_table_row(line)
+            if len(cells) >= 4:
+                total_documented += parse_int(cells[1])
+                total_all += parse_int(cells[2])
+    return total_documented, total_all
+
+
+def update_platform_readme(readme_path: Path, category: str, documented_count: int) -> None:
+    """Update category row and recompute Total row in the platform README."""
+    lines = readme_path.read_text(encoding="utf-8").splitlines()
+    updated_lines: list[str] = []
+
+    for line in lines:
+        if line.strip().startswith("|") and is_category_row(line, category):
+            cells = split_table_row(line)
+            if len(cells) >= 4:
+                total_count = parse_int(cells[2])
+                percentage = format_percentage(documented_count, total_count)
+                line = f"| {cells[0]} | {documented_count} | {total_count} | {percentage} |"
+        updated_lines.append(line)
+
+    total_documented, total_all = compute_totals(updated_lines)
+    total_percentage = format_percentage(total_documented, total_all)
+
+    final_lines: list[str] = []
+    for line in updated_lines:
+        if is_total_row(line):
+            line = f"| Total | {total_documented} | {total_all} | {total_percentage} |"
+        final_lines.append(line)
+
+    readme_path.write_text("\n".join(final_lines), encoding="utf-8")
+
+
 def main() -> None:
     for platform in list_directories(SRC_DIR):
         platform_path = SRC_DIR / platform
 
         for category in list_directories(platform_path):
             category_path = platform_path / category
-            problems = list_directories(category_path)
+            problem_dirs = list_directories(category_path)
 
-            if not problems:
+            if not problem_dirs:
                 continue
 
-            count = str(len(problems))
-            table_en = build_table_body(problems, LINK_TEXT_EN, README_EN)
-            table_pt = build_table_body(problems, LINK_TEXT_PT, README_PT)
+            problem_count = len(problem_dirs)
+            table_en = build_solution_table(problem_dirs, LINK_TEXT_EN, README_EN)
+            table_pt = build_solution_table(problem_dirs, LINK_TEXT_PT, README_PT)
 
-            update_readme(category_path / README_EN, count, table_en)
-            update_readme(category_path / README_PT, count, table_pt)
+            update_category_readme(category_path / README_EN, problem_count, table_en)
+            update_category_readme(category_path / README_PT, problem_count, table_pt)
 
             # add here
-            update_platform_readme(platform_path  / README_EN, category, len(problems))
-            print(f"Updated {platform}/{category} with {len(problems)} problems.")
-            update_platform_readme(platform_path  / README_PT, category, len(problems))
-            print(f"Updated {platform}/{category} with {len(problems)} problems.")
+            update_platform_readme(platform_path / README_EN, category, problem_count)
+            update_platform_readme(platform_path / README_PT, category, problem_count)
 
 
 if __name__ == "__main__":
