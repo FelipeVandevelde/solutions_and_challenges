@@ -31,4 +31,3 @@ jobs:
         with:
           commit_message: "docs: auto-update READMEs [skip ci]"
           branch: main
-          file_pattern: '**/README.md **/README-PT.md'
