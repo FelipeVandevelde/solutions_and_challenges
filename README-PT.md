@@ -6,9 +6,9 @@ Cada solução é acompanhada por uma explicação detalhada da implementação,
 ## :pushpin: Plataformas Atuais
 | Plataforma | Perfil | Foco |
 | :--- | :--- | :--- |
-| [**LeetCode**](./src/leetcode/README.md) | [Link do Perfil](https://leetcode.com/u/FelipeVandevelde/) | Algoritmos e Estrutura de Dados |
-| [**Beecrowd**](./src/beecrowde/README.md) | [Link do Perfil](https://judge.beecrowd.com/pt/profile/958947) | Lógica e Maratona de Programação |
-| [**TryHackMe**](./src/tryhackme/README.md) | [Link do Perfil](https://tryhackme.com/p/Vandevelde) | Pentest e CTF |
+| [**LeetCode**](./src/leetcode/README-PT.md) | [Link do Perfil](https://leetcode.com/u/FelipeVandevelde/) | Algoritmos e Estrutura de Dados |
+| [**Beecrowd**](./src/beecrowde/README-PT.md) | [Link do Perfil](https://judge.beecrowd.com/pt/profile/958947) | Lógica e Maratona de Programação |
+| [**TryHackMe**](./src/tryhackme/README-PT.md) | [Link do Perfil](https://tryhackme.com/p/Vandevelde) | Pentest e CTF |
 
 ## :hammer_and_wrench: Tecnologias Utilizadas
 * **Linguagens:** Python, C++, SQL.

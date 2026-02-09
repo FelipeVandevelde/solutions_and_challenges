@@ -21,7 +21,7 @@ The table below displays the status of solved and documented problems, categoriz
 | [Breadth-First Search](./breadth-first%20search/README.md) | 0 | 254 | 0% |
 | [Two Pointers](./two%20pointers/README.md) | 0 | 242 | 0% |
 | [Prefix Sum](./prefix%20sum/README.md) | 0 | 237 | 0% |
-| [Heap (Priority Queue)](./heap%20(priority%20queue)/README.md) | 0 | 211 | 0% |
+| [Heap (Priority Queue)](./heap%20%28priority%20queue%29/README.md) | 0 | 211 | 0% |
 | [Simulation](./simulation/README.md) | 0 | 201 | 0% |
 | [Counting](./counting/README.md) | 0 | 190 | 0% |
 | [Graph Theory](./graph%20theory/README.md) | 0 | 181 | 0% |
