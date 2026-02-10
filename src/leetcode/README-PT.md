@@ -1,4 +1,4 @@
-# :black_circle: :orange_circle: Soluções LeetCode
+# <img src="../../assets/a.svg" width="35"> Soluções LeetCode
 
 A tabela abaixo apresenta o status dos problemas resolvidos e documentados, organizados por categoria.
 

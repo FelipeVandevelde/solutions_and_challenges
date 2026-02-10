@@ -33,3 +33,6 @@ Thumbs.db
 # Local config (secrets, paths)
 *.local
 .env.local
+
+# Obsidian
+.obsidian/
