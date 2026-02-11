@@ -5,7 +5,8 @@
 
 ## Solution
 
-
+To solve this problem I did the most basic things for now.
+I created a brute force code, comparing each item and checking if the sum of that item with any other is equal to the desired number.
 
 ### Python 3.
 ```python

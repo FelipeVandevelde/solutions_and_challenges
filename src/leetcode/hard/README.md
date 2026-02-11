@@ -1,5 +1,5 @@
 ##### Este é o Readme do projeto _em inglês_, caso prefira acompanhar o Readme em Português-BR, [clique aqui](./README-PT.md)
-# <img src="../../../assets/a.svg" width="35"> LeetCode: Hard (0/907)
+# <img src="../../../assets/leetcode_icon.svg" width="35"> LeetCode: Hard (0/907)
 
 
 

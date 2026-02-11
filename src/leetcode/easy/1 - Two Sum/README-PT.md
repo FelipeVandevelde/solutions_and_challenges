@@ -4,7 +4,8 @@
 
 ## Solução
 
-
+Para a solução desse problema fiz o mais básico por hora.
+Criei um código de força bruta, comparando cada item e fazendo a verificação se a soma desse item com qualquer outro é igual ao número desejado.
 
 ### Python 3
 ```python
