@@ -4,7 +4,7 @@ A tabela abaixo apresenta o status dos problemas resolvidos e documentados, orga
 
 | Categoria | Documentados | Total de problemas | Porcentagem |
 | -- | -- | -- | -- |
-| [Iniciante](./beginner/README-PT.md) | 1 | 334 | 0% |
+| [Iniciante](./beginner/README-PT.md) | 2 | 334 | 1% |
 | [Ad-Hoc](./ad-hoc/README-PT.md) | 0 | 853 | 0% |
 | [Strings](./strings/README-PT.md) | 0 | 150 | 0% |
 | [Estruturas e Bibliotecas](./structures/README-PT.md) | 0 | 180 | 0% |
@@ -14,4 +14,4 @@ A tabela abaixo apresenta o status dos problemas resolvidos e documentados, orga
 | [Geometria Computacional](./geometry/README-PT.md) | 0 | 83 | 0% |
 | [SQL](./sql/README-PT.md) | 0 | 50 | 0% |
 | | | |
-| Total | 1 | 2411 | 0% |
+| Total | 2 | 2411 | 0% |
