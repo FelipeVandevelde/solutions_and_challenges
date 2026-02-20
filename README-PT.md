@@ -7,12 +7,7 @@ Cada solução é acompanhada por uma explicação detalhada da implementação,
 | Plataforma | Perfil | Foco |
 | :--- | :--- | :--- |
 | [**LeetCode**](./src/leetcode/README-PT.md) | [Link do Perfil](https://leetcode.com/u/FelipeVandevelde/) | Algoritmos e Estrutura de Dados |
-| [**Beecrowd**](./src/beecrowde/README-PT.md) | [Link do Perfil](https://judge.beecrowd.com/pt/profile/958947) | Lógica e Maratona de Programação |
-| [**TryHackMe**](./src/tryhackme/README-PT.md) | [Link do Perfil](https://tryhackme.com/p/Vandevelde) | Pentest e CTF |
-
-## :hammer_and_wrench: Tecnologias Utilizadas
-* **Linguagens:** Python, C++, SQL.
-* **Ferramentas:** Visual Studio Code.
+| [**Beecrowd**](./src/beecrowd/README-PT.md) | [Link do Perfil](https://judge.beecrowd.com/pt/profile/958947) | Lógica e Maratona de Programação |
 
 ## :card_index_dividers: Como navegar
 Cada pasta contém um `README.md` específico detalhando o progresso naquela plataforma.

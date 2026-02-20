@@ -9,11 +9,6 @@ Each solution includes a detailed explanation of the implementation, aimed at im
 | :--- | :--- | :--- |
 | [**LeetCode**](./src/leetcode/README.md) | [Profile Link](https://leetcode.com/u/FelipeVandevelde/) | Algorithms and Data Structures |
 | [**Beecrowd**](./src/beecrowd/README.md) | [Profile Link](https://judge.beecrowd.com/en/profile/958947) | Logic and Competitive Programming |
-| [**TryHackMe**](./src/tryhackme/README.md) | [Profile Link](https://tryhackme.com/p/Vandevelde) | Pentest and CTF |
-
-## :hammer_and_wrench: Technologies Used
-* **Linguagens:** Python, C++, SQL.
-* **Ferramentas:** Visual Studio Code.
 
 ## :card_index_dividers: Navigation
-Each folder contains a specific `README.md` detailing the progress on that platform:
+Each folder contains a specific `README.md` detailing the progress on that platform.
