@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - '**/README.md'
-      - '**/README-PT.md'
+    paths:
+      - 'src/**'
+      - 'scripts/update_readmes.py'
+      - '!**/README.md'
+      - '!**/README-PT.md'
 
 permissions:
   contents: write
