@@ -1,4 +1,4 @@
-# <img src="../../../assets/leetcode_icon.svg" width="35"> LeetCode: Fácil (1/925)
+# <img src="/assets/leetcode_icon.svg" width="35"> LeetCode: Fácil (1/925)
 
 Este diretório contém as soluções dos problemas do LeetCode categorizados em **Fácil**.
 

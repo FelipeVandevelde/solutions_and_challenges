@@ -1,4 +1,4 @@
-# <img src="../../assets/leetcode_icon.svg" width="35"> Soluções LeetCode
+# <img src="/assets/leetcode_icon.svg" width="35"> Soluções LeetCode
 
 A tabela abaixo apresenta o status dos problemas resolvidos e documentados, organizados por categoria.
 
